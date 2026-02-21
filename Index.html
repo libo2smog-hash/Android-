@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>占い</title>
+
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 24px;
+      line-height: 1.6;
+    }
+    .card {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 18px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+    }
+    h1 { margin-top: 0; }
+
+    label { display: block; margin-top: 12px; }
+
+    input, button {
+      font-size: 16px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+    input {
+      width: 100%;
+      box-sizing: border-box;
+    }
+    button {
+      width: 100%;
+      margin-top: 12px;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+    .result {
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 10px;
+      background: #f6f6f6;
+      font-weight: 700;
+      color: black;
+    }
+    .sub {
+      color: #666;
+      font-size: 14px;
+      margin-top: 6px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <h1>占い</h1>
+
+    <label>表記されたいお名前</label>
+    <input id="name" type="text" placeholder="僕がキラだ" />
+
+    <label>知りたいこと</label>
+    <input id="question" type="text" placeholder="大吉はSSRアイテムあり『6種類』" />
+
+    <button id="uranaiBtn" type="button">占う</button>
+
+    <div class="result" id="result">結果</div>
+    <div class="sub" id="detail"></div>
+    <div class="sub" id="item"></div>
+  </div>
+
+  <script>
+    const answers = [
+      "大吉", "中吉", "小吉", "吉", "末吉", "凶",
+      "末広がり", "勝ち負けにこだわらない", "休息が必要"
+    ];
+
+    const items = [
+      "カフェオレ",
+      "花",
+      "好きな香りのもの",
+      "お風呂に浸かる",
+      "散歩",
+      "甘い物",
+      "そうじ",
+      "読書",
+      "募金",
+      "料理",
+      "マッサージ",
+      "スマホデトックス",
+      "緑を見る",
+      "筋トレ",
+      "おひるね"
+    ];
+    
+    const rareitems = [
+      "金のうんち",
+      "リスキーダイス",
+      "死神代行書",
+      "暗記パン",
+      "ユニークスキル《大賢者》",
+      "タバコカートン"
+   ];
+
+    function uranai() {
+      const name = document.getElementById("name").value.trim() || "あなた";
+      const question = document.getElementById("question").value.trim();
+      const result = 
+      answers[Math.floor(Math.random()*
+      answers.length)];
+
+      
+      
+
+      const resultElement = document.getElementById("result");
+      resultElement.textContent = `${name} さんの運勢： ${result}`;
+
+      // 色を毎回リセット
+      resultElement.style.color = "black";
+
+      // 大吉のときだけゴールド
+      if (result === "大吉") {
+        resultElement.style.color = "gold";
+      }
+
+      // 質問表示（空なら非表示っぽくする）
+      document.getElementById("detail").textContent =
+        question ? `質問：「${question}」` : "";
+
+      // ラッキーアイテム表示
+      let item;
+      //大吉の特別演出
+      if (result==="大吉"){
+        item=
+      rareitems[Math.floor(Math.random()*
+      rareitems.length)];  
+      
+      document.getElementById("item").textContent="SSRアイテム:" + item;
+      }else {
+        item = items[Math.floor(Math.random()*items.length)];
+        
+      document.getElementById("item").textContent =
+        "運が良くなるかもしれない物： " + item;
+    }
+    }
+
+    document.getElementById("uranaiBtn").addEventListener("click", uranai);
+    
+    //Enter操作で占い（入力中に実行）
+    
+    documentd.getElementById("uranaiBtn").addEventListener("keydown",(e) => {
+           if(e.kay ==="Enter") uranai();
+    });
+    </script>
+    
+    
+    
+    
+  </script>
+</body>
+</html>
